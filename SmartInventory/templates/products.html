@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Product List</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+    background:#f4f6f9;
+}
+
+.card{
+    border-radius:15px;
+}
+
+table{
+    background:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white d-flex justify-content-between">
+
+<h3>📦 Product List</h3>
+
+<div>
+
+<a href="/add_product" class="btn btn-light btn-sm">
+➕ Add Product
+</a>
+
+<a href="/dashboard" class="btn btn-warning btn-sm">
+🏠 Dashboard
+</a>
+
+</div>
+
+</div>
+
+<div class="card-body">
+
+<input
+type="text"
+id="searchInput"
+class="form-control mb-3"
+placeholder="🔍 Search Product..."
+onkeyup="searchTable()">
+
+<table class="table table-bordered table-hover" id="productTable">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>S.No</th>
+<th>Product ID</th>
+<th>Name</th>
+<th>Category</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Supplier</th>
+<th>Status</th>
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for product in products %}
+
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<td>{{ product.product_id }}</td>
+
+<td>{{ product.name }}</td>
+
+<td>{{ product.category }}</td>
+
+<td>{{ product.quantity }}</td>
+
+<td>₹ {{ product.price }}</td>
+
+<td>{{ product.supplier }}</td>
+
+<td>
+    {% if product.quantity == 0 %}
+        <span class="badge bg-danger">Out of Stock</span>
+
+    {% elif product.quantity <= product.low_stock_limit %}
+        <span class="badge bg-warning text-dark">Low Stock</span>
+
+    {% else %}
+        <span class="badge bg-success">In Stock</span>
+    {% endif %}
+</td>
+
+<td>
+
+<a
+href="/edit_product/{{ product.id }}"
+class="btn btn-warning btn-sm">
+
+✏ Edit
+
+</a>
+
+<a
+href="/delete_product/{{ product.id }}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this product?')">
+
+🗑 Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function searchTable(){
+
+let input=document.getElementById("searchInput");
+
+let filter=input.value.toUpperCase();
+
+let table=document.getElementById("productTable");
+
+let tr=table.getElementsByTagName("tr");
+
+for(let i=1;i<tr.length;i++){
+
+let td=tr[i].getElementsByTagName("td");
+
+let found=false;
+
+for(let j=0;j<td.length;j++){
+
+if(td[j]){
+
+if(td[j].innerHTML.toUpperCase().indexOf(filter)>-1){
+
+found=true;
+
+}
+
+}
+
+}
+
+tr[i].style.display=found?"":"none";
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>

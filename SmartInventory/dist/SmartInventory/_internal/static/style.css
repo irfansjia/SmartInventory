@@ -1,0 +1,47 @@
+body{
+
+    background:#f4f6f9;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+.login-container{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
+}
+
+.login-card{
+
+    background:white;
+
+    width:400px;
+
+    padding:40px;
+
+    border-radius:10px;
+
+    box-shadow:0px 5px 20px rgba(0,0,0,0.2);
+
+    text-align:center;
+
+}
+
+h1{
+
+    margin-bottom:20px;
+
+}
+
+button{
+
+    margin-top:10px;
+
+}
